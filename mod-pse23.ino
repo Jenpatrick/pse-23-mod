@@ -4,6 +4,7 @@
 #include <SSD1306Ascii.h>
 #include <SSD1306AsciiWire.h>
 #include <Wire.h>
+#include <SerialDebug.h>
 
 // Pin Definitions
 #define PIN_LED 36
@@ -23,8 +24,8 @@
 #define PIN_SELECT_FIRE_B 19
 #define PIN_CONFIG_MODE 2
 #define PIN_ENABLE_BT 21
-#define PIN_ENABLE_DEBUG 22
-#define PIN_MAG_SENSOR 37
+#define PIN_ENABLE_DEBUG 17
+#define PIN_MAG_SENSOR 35
 #define PIN_DART_IN_MAG_SENSOR 32
 #define PIN_PUSHER_RETURN_SENSOR 39
 #define PIN_CHRONO_A 37
@@ -198,9 +199,86 @@ bool BatteryFlat = false;
 void setup() {
   // put your setup code here, to run once:
 
+ Serial.begin(115200); // Can change it to 230400, if you dont use debugIsr* macros
+
+#ifdef __AVR_ATmega32U4__ // Arduino AVR Leonardo
+
+    while (!Serial) {
+        ; // wait for serial port to connect. Needed for Leonardo only
+    }
+
+#else
+
+    delay(500); // Wait a time
+
+#endif
+
+        // Debug
+
+        // Attention:
+    // SerialDebug starts disabled and it only is enabled if have data avaliable in Serial
+    // Good to reduce overheads.
+        // if You want debug, just press any key and enter in monitor serial
+
+    // Note: all debug in setup must be debugA (always), due it is disabled now.
+
+    printlnA(F("**** Setup: initializing ..."));
+
+    // Buildin led
+
+    pinMode(LED_BUILTIN, OUTPUT);
+    digitalWrite(LED_BUILTIN, LOW);
+
+    // WiFi connection, etc ....
+
+    // ...
+
+    // End
+
+    printlnA(F("*** Setup end"));
+ Serial.begin(57600); // Can change it to 230400, if you dont use debugIsr* macros
+
+#ifdef __AVR_ATmega32U4__ // Arduino AVR Leonardo
+
+    while (!Serial) {
+        ; // wait for serial port to connect. Needed for Leonardo only
+    }
+
+#else
+
+    delay(500); // Wait a time
+
+#endif
+
+        // Debug
+
+        // Attention:
+    // SerialDebug starts disabled and it only is enabled if have data avaliable in Serial
+    // Good to reduce overheads.
+        // if You want debug, just press any key and enter in monitor serial
+
+    // Note: all debug in setup must be debugA (always), due it is disabled now.
+
+    printlnA(F("**** Setup: initializing ..."));
+
+    // Buildin led
+
+    pinMode(LED_BUILTIN, OUTPUT);
+    digitalWrite(LED_BUILTIN, LOW);
+
+    // WiFi connection, etc ....
+
+    // ...
+
+    // End
+
+    printlnA(F("*** Setup end"));
+
+  
+
   pinMode( PIN_ENABLE_DEBUG, INPUT_PULLUP );
   if( digitalRead( PIN_ENABLE_DEBUG ) == HIGH )
-    DebugEnabled = false;
+    DebugEnabled = true;
   else
     DebugEnabled = true;
   
@@ -1568,13 +1646,3 @@ void DebugPrintln( const __FlashStringHelper* Val )
 }
 
 
-/*
- * 
- * Hacks to fix STM32 stupid stuff
- */
-
- extern "C" char * __cxa_demangle (const char *mangled_name, char *output_buffer,
-size_t *length, int *status) {
-strcpy((char*)mangled_name, output_buffer);
-return output_buffer;
-}
