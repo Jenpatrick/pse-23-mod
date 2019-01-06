@@ -36,7 +36,7 @@
 byte BurstSize = 3; // Configured
 byte TargetDPS = 99; // 99 means full rate
 bool EStopOnPusherJam = true; // Controls whether to stop on a pusher jam or not
-bool FireOnEmptyMag = false; // Controls whether to fire on an empty mag
+bool FireOnEmptyMag = true; // Controls whether to fire on an empty mag
 int MotorSpeedFull = 50; // For full-pull
 int MotorSpeedHalf = 30; // For half-pull
 int MagSize = 18; // Magazine size
@@ -54,7 +54,7 @@ struct ProfileDefinition
   byte HalfPower = 30;
   byte ROF = 99;
   byte BurstSize = 3;
-  bool FireOnEmptyMag = false;
+  bool FireOnEmptyMag = true;
   byte AltAction = PROFILE_ALT_NOTHING;
 };
 ProfileDefinition Profiles[4];
@@ -149,8 +149,8 @@ bool MotorsEnabled = false;
 byte SetMaxSpeed = 100; // in percent.
 unsigned long TimeLastMotorSpeedChanged = 0;
 Servo MotorA;
-Servo MotorB;
-Servo MotorC;
+//Servo MotorB;
+//Servo MotorC;
 
 #define COMMAND_REV_NONE 0
 #define COMMAND_REV_HALF 1
@@ -924,8 +924,8 @@ void ProcessMainMotors()
     DebugPrintln(CurrentMotorSpeed);
 
     MotorA.writeMicroseconds( CurrentMotorSpeed );
-    MotorB.writeMicroseconds( CurrentMotorSpeed );
-    MotorC.writeMicroseconds( CurrentMotorSpeed );
+   // MotorB.writeMicroseconds( CurrentMotorSpeed );
+   // MotorC.writeMicroseconds( CurrentMotorSpeed );
 
     PreviousMotorSpeed = CurrentMotorSpeed;
   }
