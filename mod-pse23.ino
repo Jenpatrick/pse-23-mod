@@ -9,15 +9,15 @@
 // Pin Definitions
 #define PIN_LED 36
 #define PIN_MOTOR_A 26
-#define PIN_MOTOR_B 34
-#define PIN_MOTOR_C 27
-#define PIN_ESC_FET 26
+//#define PIN_MOTOR_B 34
+//#define PIN_MOTOR_C 27
+#define PIN_ESC_FET 27
 #define PIN_TRIGGER_FULL 14
 #define PIN_TRIGGER_HALF 12
 #define PIN_TRIGGER_REV 13
 #define PIN_ALT_MODE 33
-#define PIN_E_STOP 25
-#define PIN_PUSHER_FET 35
+#define PIN_E_STOP 38
+#define PIN_PUSHER_FET 25
 #define PIN_PROFILE_A 23
 #define PIN_PROFILE_B 2
 #define PIN_SELECT_FIRE_A 18
@@ -29,7 +29,7 @@
 #define PIN_DART_IN_MAG_SENSOR 32
 #define PIN_PUSHER_RETURN_SENSOR 39
 #define PIN_CHRONO_A 37
-#define PIN_CHRONO_B 38
+#define PIN_CHRONO_B 34
 #define PIN_BATTERY_MONITOR 4
 
 // Configuration Options
@@ -340,12 +340,12 @@ void setup() {
   digitalWrite( PIN_ESC_FET, HIGH );  
   // Set up motors
   MotorA.attach(PIN_MOTOR_A);
-  MotorB.attach(PIN_MOTOR_B);
-  MotorC.attach(PIN_MOTOR_C);
+  //MotorB.attach(PIN_MOTOR_B);
+  //MotorC.attach(PIN_MOTOR_C);
   // Arm ESC's
   MotorA.writeMicroseconds(MinMotorSpeed);
-  MotorB.writeMicroseconds(MinMotorSpeed);
-  MotorC.writeMicroseconds(MinMotorSpeed);
+  //MotorB.writeMicroseconds(MinMotorSpeed);
+  //MotorC.writeMicroseconds(MinMotorSpeed);
   delay(1000);   // Wait for ESC to initialise (9 seconds)
   DebugPrintln( F("ESC Initialised") );
 
@@ -1644,5 +1644,3 @@ void DebugPrintln( const __FlashStringHelper* Val )
   Serial.println( Val );
   //Serial.println( (PGM_P)pgm_read_word(&(Val)) );  
 }
-
-
